@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Arms App</title>
+    <style>
+      body,
+      html {
+        height: 100%;
+        margin: 0;
+      }
+
+      .bg {
+        background-image: url("./assets/no-internet.png");
+        height: 555px;
+        width: 840px;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+      }
+
+      .container {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        -webkit-transform: translate(-50%, -50%);
+        -ms-transform: translate(-50%, -50%);
+        transform: translate(-50%, -50%);
+      }
+    </style>
+    <!-- <style>
+      
+
+      .sub-container {
+        margin: auto;
+      }
+    </style> -->
+  </head>
+
+  <body>
+    <div class="container">
+      <div class="bg" onclick="reload()"></div>
+    </div>
+  </body>
+  <!-- <body>
+    <div class="container">
+      <h1>No Connection</h1>
+      <div class="sub-container">
+        <button onclick="reload()">Reload</button>
+      </div>
+    </div>
+  -->
+  <script src="./script.js"></script>
+  </body>
+
+</html>

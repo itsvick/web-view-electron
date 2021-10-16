@@ -1,0 +1,74 @@
+{
+  "name": "arms-app",
+  "version": "0.0.1",
+  "description": "A minimal Electron application",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "build": "electron-builder -l --publish never",
+    "postinstall": "electron-builder install-app-deps",
+    "build-icons": "electron-icon-maker --input=assets/icon.png --output=./build"
+  },
+  "repository": "https://github.com/electron/electron-quick-start",
+  "keywords": [
+    "Electron",
+    "quick",
+    "start",
+    "tutorial",
+    "demo"
+  ],
+  "author": {
+    "name": "Arms Team",
+    "email": "test@gmail.com"
+  },
+  "license": "CC0-1.0",
+  "build": {
+    "appId": "co.armsapp.pr",
+    "productName": "ArmsApp",
+    "copyright": "arms-app.pvt.LTD.",
+    "asar": false,
+    "icon": "assets/icons/png/512x512.png",
+    "files": [
+      "**/*"
+    ],
+    "directories": {
+      "app": ".",
+      "buildResources": "build",
+      "output": "./dist/${version}/${os}/${arch}"
+    },
+    "protocols": [
+      {
+        "name": "arms",
+        "schemes": [
+          "arms"
+        ]
+      }
+    ],
+    "mac": {
+      "category": "public.app-category.utilities",
+      "icon": "build/icons/mac/icon.icns"
+    },
+    "win": {
+      "target": "nsis",
+      "icon": "build/icons/win/icon.ico"
+    },
+    "nsis": {
+      "installerIcon": "build/icons/win/icon.ico",
+      "uninstallerIcon": "build/icons/win/icon.ico"
+    },
+    "linux": {
+      "description": "Electron Arms app",
+      "target": [
+        "AppImage",
+        "deb"
+      ],
+      "icon": "build/icons/png",
+      "category": "Utility"
+    }
+  },
+  "devDependencies": {
+    "electron": "^15.1.2",
+    "electron-builder": "^22.13.1",
+    "electron-icon-maker": "0.0.5"
+  }
+}
