@@ -34,7 +34,7 @@
     "directories": {
       "app": ".",
       "buildResources": "build",
-      "output": "./dist/${version}/${os}/${arch}"
+      "output": "./dist"
     },
     "protocols": [
       {
