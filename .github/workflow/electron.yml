@@ -1,0 +1,74 @@
+name: GitHub Actions Demo
+on: [push]
+jobs:
+  #   Explore-GitHub-Actions:
+  #     runs-on: ubuntu-latest
+  #     steps:
+  #       - run: echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event."
+  #       - run: echo "🐧 This job is now running on a ${{ runner.os }} server hosted by GitHub!"
+  #       - run: echo "🔎 The name of your branch is ${{ github.ref }} and your repository is ${{ github.repository }}."
+  #       - name: Check out repository code
+  #         uses: actions/checkout@v2
+  #       - run: echo "💡 The ${{ github.repository }} repository has been cloned to the runner."
+  #       - run: echo "🖥️ The workflow is now ready to test your code on the runner."
+  #       - name: List files in the repository
+  #         run: |
+  #           ls ${{ github.workspace }}
+  #       - run: echo "🍏 This job's status is ${{ job.status }}."
+  #   build_on_mac:
+  #     runs-on: macOS-latest
+  #     steps:
+  #     - uses: actions/checkout@master
+  #     - uses: actions/setup-node@master
+  #       with:
+  #         node-version: 14.15.1
+  #     - name: see directory
+  #       run: ls
+  build_on_win:
+    runs-on: windows-2016
+    steps:
+      - uses: actions/checkout@master
+      - uses: actions/setup-node@master
+        with:
+          node-version: 14.15.1
+          # GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: install node tools
+        run: npm install --global --production windows-build-tools@4.0.0
+      - name: install node-gyp
+        run: npm install --global node-gyp@latest
+      - name: Set node config to use python2.7
+        run: npm config set python python2.7
+      - name: Set node config to set msvs_version to 2015
+        run: npm config set msvs_version 2015
+      #     - name: Work around for Windows Server 2019
+      #       run: set path=%path%;C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Current\Bin
+      - name: Install dependencies
+        run: npm install
+      #     - name: check env
+      #       env:
+      #         ELECTRON: true
+      #         APP_VERSION_NUMBER: 0.0.1
+      #       run: set
+      - name: Build on Windows
+        env:
+          ELECTRON: true
+          APP_VERSION_NUMBER: 0.0.1
+        run: npm run build
+      # - name: Build Electron
+      #   env:
+      #     ELECTRON: true
+      #     APP_VERSION_NUMBER: 0.0.1
+      #   run: npm run dist
+      - name: see directory
+        run: ls ./dist
+      - uses: actions/upload-artifact@v2
+        with:
+          name: assets for download
+          path: dist/*.exe
+    # - uses: lucy  io/upload-to-release@master
+    #   with:
+    #     name: lucyio/electron
+    #     path: ./dist/win-unpacked
+    #     action: unpublished
+    #     release_id: 0.0.1
+    #     release-repo: lucyio/electron
