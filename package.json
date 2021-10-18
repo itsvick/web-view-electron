@@ -5,7 +5,7 @@
   "main": "main.js",
   "scripts": {
     "start": "electron .",
-    "build": "electron-builder -l --publish never",
+    "build": "electron-builder --publish never",
     "postinstall": "electron-builder install-app-deps",
     "build-icons": "electron-icon-maker --input=assets/icon.png --output=./build"
   },

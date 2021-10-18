@@ -3,6 +3,8 @@ const { app, BrowserWindow, ipcMain, net, session, Menu } = require("electron");
 const path = require("path");
 let mainWindow;
 let deeplinkingUrl;
+let browseUrl = "https://pr.armsapp.co";
+// const browseUrl = "https://thenextweb.com/news/apple-october-18-2021-event";
 const gotTheLock = app.requestSingleInstanceLock();
 if (gotTheLock) {
   app.on("second-instance", (e, argv) => {
@@ -10,15 +12,20 @@ if (gotTheLock) {
 
     // Protocol handler for win32
     // argv: An array of the second instance’s (command line / deep linked) arguments
-    if (process.platform == "win32") {
+    if (process.platform == "win32" || process.platform === 'linux') {
       // Keep only command line / deep linked arguments
       deeplinkingUrl = argv.slice(1);
     }
     // logEverywhere("app.makeSingleInstance# " + deeplinkingUrl);
 
+    console.log("second instance", argv);
+    const link = deeplinkingUrl.replace(/^\/+/g, "");
     if (mainWindow) {
+      mainWindow.loadURL(`${browseUrl}/${link}`);
       if (mainWindow.isMinimized()) mainWindow.restore();
       mainWindow.focus();
+    } else {
+      browseUrl = `${browseUrl}/${link}`;
     }
   });
 } else {
@@ -36,6 +43,8 @@ function createWindow() {
     height: 600,
     // icon: getAssetPath('icon.png'),
     icon: path.join(__dirname, "assets", "icons", "png", "1024x1024.png"),
+    // backgroundColor: "#2e2c29",
+    show: false,
     webPreferences: {
       // preload: path.join(__dirname, "preload.js"),
       nodeIntegration: true,
@@ -45,10 +54,15 @@ function createWindow() {
     },
   });
 
+  mainWindow.once("ready-to-show", () => {
+    mainWindow.show();
+  });
+
   // and load the index.html of the app.
   // mainWindow.loadFile('index.html')
   // mainWindow.loadFile("no-internet.html");
-  mainWindow.loadURL("https://thenextweb.com/news/apple-october-18-2021-event");
+  // mainWindow.loadURL("https://thenextweb.com/news/apple-october-18-2021-event");
+  mainWindow.loadURL(browseUrl);
   mainWindow.webContents.on(
     "did-fail-load",
     (
@@ -73,9 +87,8 @@ function createWindow() {
 
     if (net.isOnline()) {
       setTimeout(() => {
-        mainWindow.loadURL(
-          "https://thenextweb.com/news/apple-october-18-2021-event"
-        );
+        // mainWindow.loadURL("https://thenextweb.com/news/apple-october-18-2021-event");
+        mainWindow.loadURL(browseUrl);
       }, 2000);
     }
   });
@@ -126,9 +139,8 @@ app.on("will-finish-launching", () => {
   app.on("open-url", (event, url) => {
     event.preventDefault();
     deeplinkingUrl = url;
+    mainWindow.loadURL(`${browseUrl}/url`);
     // logEverywhere("open-url# " + deeplinkingUrl);
+    console.log("in open url", url);
   });
 });
-
-// In this file you can include the rest of your app's specific main process
-// code. You can also put them in separate files and require them here.
