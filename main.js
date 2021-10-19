@@ -12,20 +12,24 @@ if (gotTheLock) {
 
     // Protocol handler for win32
     // argv: An array of the second instance’s (command line / deep linked) arguments
-    if (process.platform == "win32" || process.platform === 'linux') {
+    if (process.platform == "win32") {
       // Keep only command line / deep linked arguments
       deeplinkingUrl = argv.slice(1);
+    }
+
+    if(process.platform === 'linux') {
+      deeplinkingUrl = argv.slice(1);
+      deeplinkingUrl = deeplinkingUrl.replace(/^\/+/g, "");
     }
     // logEverywhere("app.makeSingleInstance# " + deeplinkingUrl);
 
     console.log("second instance", argv);
-    const link = deeplinkingUrl.replace(/^\/+/g, "");
     if (mainWindow) {
-      mainWindow.loadURL(`${browseUrl}/${link}`);
+      mainWindow.loadURL(`${browseUrl}/${deeplinkingUrl}`);
       if (mainWindow.isMinimized()) mainWindow.restore();
       mainWindow.focus();
     } else {
-      browseUrl = `${browseUrl}/${link}`;
+      browseUrl = `${browseUrl}/${deeplinkingUrl}`;
     }
   });
 } else {
@@ -99,6 +103,7 @@ function createWindow() {
   if (process.platform == "win32") {
     // Keep only command line / deep linked arguments
     deeplinkingUrl = process.argv.slice(1);
+    mainWindow.loadURL(`${browseUrl}/${deeplinkingUrl}`);
   }
 
   // Open the DevTools.
@@ -139,7 +144,7 @@ app.on("will-finish-launching", () => {
   app.on("open-url", (event, url) => {
     event.preventDefault();
     deeplinkingUrl = url;
-    mainWindow.loadURL(`${browseUrl}/url`);
+    mainWindow.loadURL(`${browseUrl}/${url}`);
     // logEverywhere("open-url# " + deeplinkingUrl);
     console.log("in open url", url);
   });
