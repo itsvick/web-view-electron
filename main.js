@@ -17,7 +17,7 @@ if (gotTheLock) {
       deeplinkingUrl = argv.slice(1);
     }
 
-    if(process.platform === 'linux') {
+    if (process.platform === "linux") {
       deeplinkingUrl = argv.slice(1);
       deeplinkingUrl = deeplinkingUrl.replace(/^\/+/g, "");
     }
@@ -86,6 +86,10 @@ function createWindow() {
     }
   );
 
+  mainWindow.on("closed", function () {
+    mainWindow = null;
+  });
+
   ipcMain.on("reload-page", () => {
     console.log("in reload page", net.isOnline());
 
@@ -103,6 +107,9 @@ function createWindow() {
   if (process.platform == "win32") {
     // Keep only command line / deep linked arguments
     deeplinkingUrl = process.argv.slice(1);
+  }
+  
+  if (deeplinkingUrl) {
     mainWindow.loadURL(`${browseUrl}/${deeplinkingUrl}`);
   }
 
@@ -143,8 +150,11 @@ app.on("will-finish-launching", () => {
   // Protocol handler for osx
   app.on("open-url", (event, url) => {
     event.preventDefault();
-    deeplinkingUrl = url;
-    mainWindow.loadURL(`${browseUrl}/${url}`);
+    deeplinkingUrl = url.substr(7, url.length);
+
+    if (mainWindow) {
+      mainWindow.loadURL(`https://pr.armsapp.co/${deeplinkingUrl}`);
+    }
     // logEverywhere("open-url# " + deeplinkingUrl);
     console.log("in open url", url);
   });

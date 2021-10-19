@@ -38,7 +38,7 @@
     },
     "protocols": [
       {
-        "name": "arms",
+        "name": "ArmsApp",
         "schemes": [
           "arms"
         ]
