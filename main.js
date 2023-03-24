@@ -4,7 +4,7 @@ const path = require("path");
 let mainWindow;
 let deeplinkingUrl;
 // let browseUrl = "https://pr.armsapp.co";
-const browseUrl = "https://thenextweb.com/news/apple-october-18-2021-event";
+const browseUrl = "https://getdigitalsignage.com/wp-login.php";
 const gotTheLock = app.requestSingleInstanceLock();
 if (gotTheLock) {
   app.on("second-instance", (e, argv) => {
