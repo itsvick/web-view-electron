@@ -43,12 +43,13 @@ function createWindow() {
     path.join(__dirname, "assets", "icons", "png", "1024x1024.png")
   );
   mainWindow = new BrowserWindow({
-    width: 800,
-    height: 600,
+    width: 4098,
+    height: 2304,
     // icon: getAssetPath('icon.png'),
     icon: path.join(__dirname, "assets", "icons", "png", "1024x1024.png"),
     // backgroundColor: "#2e2c29",
     show: false,
+    frame: false,
     webPreferences: {
       // preload: path.join(__dirname, "preload.js"),
       nodeIntegration: true,
