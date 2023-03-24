@@ -3,8 +3,8 @@ const { app, BrowserWindow, ipcMain, net, session, Menu } = require("electron");
 const path = require("path");
 let mainWindow;
 let deeplinkingUrl;
-let browseUrl = "https://pr.armsapp.co";
-// const browseUrl = "https://thenextweb.com/news/apple-october-18-2021-event";
+// let browseUrl = "https://pr.armsapp.co";
+const browseUrl = "https://thenextweb.com/news/apple-october-18-2021-event";
 const gotTheLock = app.requestSingleInstanceLock();
 if (gotTheLock) {
   app.on("second-instance", (e, argv) => {
