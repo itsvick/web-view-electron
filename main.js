@@ -5,6 +5,7 @@ let mainWindow;
 let deeplinkingUrl;
 // let browseUrl = "https://pr.armsapp.co";
 const browseUrl = "https://getdigitalsignage.com/wp-login.php";
+
 const gotTheLock = app.requestSingleInstanceLock();
 if (gotTheLock) {
   app.on("second-instance", (e, argv) => {
@@ -60,6 +61,7 @@ function createWindow() {
   });
 
   mainWindow.once("ready-to-show", () => {
+    mainWindow.setSize(2304, 4098);
     mainWindow.show();
   });
 
